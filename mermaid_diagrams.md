@@ -24,6 +24,8 @@ classDiagram
     Season *-- Episode 
 ```
 
+#### Let's try something else
+
 ```mermaid
 classDiagram
     Teacher -- Student
