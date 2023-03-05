@@ -75,7 +75,7 @@ Markup legend for `sequenceDiagram`
 - `participant` defines a participant. A participant represents a process. You can define aliases for participants like so `participant SUS as Sign Up Service`. When defining messages between participants, you can then use the shorter alias rather than its full name, which will still be rendered on the diagram.
 - `->>` defines a synchronous interaction between two sequence diagram nodes which is a message. It is a request.
 - `-->>` defines a reply message interaction. It is a response.
-- `alt SOME_TAG_NAME` then `else` and `end` to define branching logic in a diagram. You can use as many `else` as you need to define more branches.
+- `alt SOME_TAG_NAME` then `else TAG_NAME` and `end` to define branching logic in a diagram. You can use as many `else` as you need to define more branches.
 
 ### User Signup Flow Diagram
 
@@ -94,7 +94,7 @@ sequenceDiagram
     
     alt invalid input
         Sign Up Service -->> Browser: Error
-    else
+    else valid input
         Sign Up Service ->> User Service: POST /users
         User Service -->> Sign Up Service: 201 Created (User)
         Sign Up Service -->> Browser: 301 Redirect (Login Page)
