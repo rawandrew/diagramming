@@ -54,11 +54,11 @@ Let's try another one...
 
 ```mermaid
 classDiagram
-    Teacher -- Student
-    Teacher o-- Class
+    Teacher "1..*" -- "1..*" Student: is associated with
+    Teacher "1" o-- "0..*" Class: teaches
     
-    Student o-- Class
+    Student "1" o-- "1..*" Class: enrolled
     
-    Class  *-- Grade
+    Class "1" *-- "0..*" Grade: has
 ```
 
