@@ -66,4 +66,18 @@ classDiagram
     link Class "http://www.example.com/class" _blank
     link Grade "http://www.example.com/grade" _blank
 ```
+## How to visualise application and user flows
 
+Markup legend for `sequenceDiagram`
+- `actor` defines an actor. An actor represents a human user.
+- `participant` defines a participant. A participant represents a process.
+
+### User Signup Flow Diagram
+
+```mermaid
+sequenceDiagram
+    actor Browser
+    participant Sign Up Service
+    participant User Service
+    participant Kafka
+```
