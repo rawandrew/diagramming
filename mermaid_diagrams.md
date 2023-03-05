@@ -18,26 +18,28 @@ Markup legend for a `classDiagram`:
 - `*--` represents a composition association. Entities linked by composition have the closest relationship. Like aggregations, there is a parent. If the parent is deleted the child is also deleted. A child entity here makes no sense without a parent.
 - `--|>` represents an inheritance association. It goes from the subclass to the template. 
 - `:` can be used at the end of any of the above associations to add descriptions. Descriptions can be used on any flows through the diagram.
+- `"1"`, `"1..*"`, `"0..*"` are ways of adding multiplicity to the relationships. Known as cardinality. Use them on each side to annotate the diagram, or just on one side of the relationship. An entity’s cardinality is defined on the opposite side of the relationship, which can be confusing to begin with.
 - `%%`  is used to comment lines of the diagram. Nice!
 
 The above markup can be used to generate something like...
 
 ```mermaid
 classDiagram
-    Title -- Genre: is associated with
-    Title *-- Season: has
-    Title *-- Review: has
-    Title o-- Actor: features    
+    Title "1..*" -- "1..*" Genre: is associated with
+    Title "1" *-- "0..*" Season: has
+    Title "1" *-- "0..*" Review: has
+    Title "0..*" o-- "1..*" Actor: features
+        
     TV Show --|> Title: implements
     Short --|> Title: implements
     Film --|> Title: implements
     
-    Viewer --> Title: watches
+    Viewer "0..*" --> "0..*" Title: watches
     
-    Season *-- Review: has
-    Season *-- Episode: contains
+    Season "1" *-- "0..*" Review: has
+    Season "1" *-- "1..*" Episode: contains
     
-    Episode *-- Review: has
+    Episode "1" *-- "0..*" Review: has
 ```
 
 Let's try another one...
