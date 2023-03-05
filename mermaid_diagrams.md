@@ -60,5 +60,10 @@ classDiagram
     Student "1" o-- "1..*" Class: enrolled
     
     Class "1" *-- "0..*" Grade: has
+    
+    link Teacher "http://www.example.com/teacher" _blank
+    link Student "http://www.example.com/student" _blank
+    link Class "http://www.example.com/class" _blank
+    link Grade "http://www.example.com/grade" _blank
 ```
 
