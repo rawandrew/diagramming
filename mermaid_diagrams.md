@@ -68,9 +68,14 @@ classDiagram
 ```
 ## How to visualise application and user flows
 
+Sequence diagrams are high-level views of a process, so try to keep the labels high-level too.
+
 Markup legend for `sequenceDiagram`
 - `actor` defines an actor. An actor represents a human user.
-- `participant` defines a participant. A participant represents a process.
+- `participant` defines a participant. A participant represents a process. You can define aliases for participants like so `participant SUS as Sign Up Service`. When defining messages between participants, you can then use the shorter alias rather than its full name, which will still be rendered on the diagram.
+- `->>` defines a synchronous interaction between two sequence diagram nodes which is a message. It is a request.
+- `-->>` defines a reply message interaction. It is a response.
+- `alt SOME_TAG_NAME` then `else` and `end` to define branching logic in a diagram. You can use as many `else` as you need to define more branches.
 
 ### User Signup Flow Diagram
 
@@ -80,4 +85,18 @@ sequenceDiagram
     participant Sign Up Service
     participant User Service
     participant Kafka
+    
+    Browser ->> Sign Up Service: GET /sign_up
+    Sign Up Service -->> Browser: 200 OK (HTML page)
+    
+    Browser ->> Sign Up Service: POST /sign_up
+    Sign Up Service ->> Sign Up Service: Validate input
+    
+    alt invalid input
+        Sign Up Service -->> Browser: Error
+    else
+        Sign Up Service ->> User Service: POST /users
+        User Service -->> Sign Up Service: 201 Created (User)
+        Sign Up Service -->> Browser: 301 Redirect (Login Page)
+    end
 ```
