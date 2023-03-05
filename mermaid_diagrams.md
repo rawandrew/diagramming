@@ -20,8 +20,12 @@ Markup legend for a `classDiagram`:
 - `:` can be used at the end of any of the above associations to add descriptions. Descriptions can be used on any flows through the diagram.
 - `"1"`, `"1..*"`, `"0..*"` are ways of adding multiplicity to the relationships. Known as cardinality. Use them on each side to annotate the diagram, or just on one side of the relationship. An entity’s cardinality is defined on the opposite side of the relationship, which can be confusing to begin with.
 - `%%`  is used to comment lines of the diagram. Nice!
+- `link NODE_NAME LINK_URL _blank` to generate a clickable link on the name of the entity.
 
 The above markup can be used to generate something like...
+
+
+### Streamy Domain Model
 
 ```mermaid
 classDiagram
@@ -40,9 +44,13 @@ classDiagram
     Season "1" *-- "1..*" Episode: contains
     
     Episode "1" *-- "0..*" Review: has
+    
+    link Title "http://www.example.com" _blank
 ```
 
 Let's try another one...
+
+### School Domain Model
 
 ```mermaid
 classDiagram
