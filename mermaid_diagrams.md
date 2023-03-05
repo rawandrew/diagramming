@@ -21,7 +21,10 @@ classDiagram
     Short --|> Title
     Film --|> Title
     
+    Season *-- Review
     Season *-- Episode 
+    
+    Episode *-- Review
 ```
 
 #### Let's try something else
