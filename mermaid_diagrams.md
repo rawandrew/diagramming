@@ -176,6 +176,18 @@ Markup legend for `flowchart [TB|TD|BT|RL|LR]` continued
 - `subgraph id[Title]` closed with `end` allows defining sub-flows within the main flowchart.
 - `style nodeId styleProperties` to style just a specific node.
 - A variety of shapes besides rectangles and cylinders are available to use within flowcharts. The main other two are circles, which are formed using `id((label))`, and diamonds, formed using `id{label}`. A full list is available from Mermaid’s documentation
+- If we add hyphens to all interactions at a given rank, Mermaid essentially “skips” a rank and simply fills the rank with an extended line. So use `--->` instead of `-->` for example.
+- `ParentNode -. "arrow text" .-> ChildNode` to define a dashed line arrow. Other arrow types are:
+  - `A–>B` for a link with arrowhead
+  - `A– text –>B or A–>|text|B` for a link with Arrowhead with text
+  - `A—B` for a link with No Arrowhead
+  - `A– This is the text! —B or A— |This is the text|B` for a link with No Arrowhead and text
+  - `A-.->B` for a dotted link
+  - `A-. text .-> B` for a dotted link with text
+  - `A ==> B` for a thick link with Arrowhead
+  - `A == text ==> B` for a thick link with Arrowhead with text
+  - `A– text –> B – text2 –> C` for chaining links
+  - `A –> B & C–> D` for multiple links
 
 ```mermaid
 flowchart TD
@@ -220,10 +232,10 @@ flowchart TD
         WA -- "Reads and writes to \n [Redis Serialization Protocol]" --> R
     end
     
-    WA -- "Publishes messages to \n [Binary over TCP]" --> K
-    WA -- "Makes API calls to \n [HTTPS]" --> TS
-    WA -- "Makes API calls to \n [HTTPS]" --> RS
-    WA -- "Makes API calls to \n [HTTPS]" --> SS
+    WA -. "Publishes messages to \n [Binary over TCP]" ..-> K
+    WA -- "Makes API calls to \n [HTTPS]" ---> TS
+    WA -- "Makes API calls to \n [HTTPS]" ---> RS
+    WA -- "Makes API calls to \n [HTTPS]" ---> SS
 
     
     classDef container fill:#1168bd,stroke:#0b4884, color:#ffffff
