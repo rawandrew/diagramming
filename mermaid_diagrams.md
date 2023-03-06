@@ -84,6 +84,8 @@ Markup legend for `sequenceDiagram`
 
 ```mermaid
 sequenceDiagram
+    autonumber
+    
     actor Browser
     participant Sign Up Service
     participant User Service
