@@ -163,3 +163,31 @@ flowchart TD
     class LS focusSystem
     class TS,RS,SS supportingSystem
 ```
+
+### How to Map You System's Containers
+
+A container is a single deployable unit. A container diagram shows interactions between containers rather than systems. They sho everything deployed for that system to function.
+
+```mermaid
+flowchart TD
+    User["Premium Member
+    [Person]
+    A user of the website who has \n purchased a subscription"]
+    
+    WA["Web Application
+    [.NET Core MVC Application]
+    Allows members to view and review titles \n from a web browser. Also exposes \n an API for the mobile app"]
+    
+    MA["Mobile Application
+    [Xamarin Application]
+    Allows members to view and review \n titles from their mobile devices"]
+    
+    User -- "Views titles, searches titles and reviews titles \n using [HTTPS]" --> WA
+    User -- "Views titles, searches titles and reviews titles \n using [HTTPS]" --> MA
+    
+    classDef container fill:#1168bd,stroke:#0b4884, color:#ffffff
+    classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+    
+    class User person
+    class WA,MA container
+```
