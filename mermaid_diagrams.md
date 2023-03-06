@@ -78,6 +78,7 @@ Markup legend for `sequenceDiagram`
 - `alt SOME_TAG_NAME` then `else TAG_NAME` and `end` to define branching logic in a diagram. You can use as many `else` as you need to define more branches.
 - `--)` defines an asynchronous interaction between participants/actors.
 - `activate PARTTICIPANT_NAME` with `deactivate PARTICIPANT_NAME` to define an activation that offers more insight at a glance on the diagram. Activations can also be defined by adding a `+` (activation) or `-` (deactiva- tion) sign to the ends of the arrows.
+- `Note [Left|Right] of NODE_NAME` to add a note on the diagram for a specific node.
 
 ### User Signup Flow Diagram
 
@@ -101,6 +102,7 @@ sequenceDiagram
     else valid input
         Sign Up Service ->>+ User Service: POST /users
         User Service --) Kafka: User Created Event Published
+        Note left of Kafka: other services take action based on this event
         User Service -->>- Sign Up Service: 201 Created (User)
         Sign Up Service -->>- Browser: 301 Redirect (Login Page)
     end
