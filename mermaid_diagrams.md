@@ -110,6 +110,32 @@ sequenceDiagram
         User Service -->>- Sign Up Service: 201 Created (User)
         Sign Up Service -->>- Browser: 301 Redirect (Login Page)
     end
-    
+
     links User Service: {"Repository": "https://www.example.com/repository"}
+```
+
+### How to Model Your Architecture
+
+Markup legend for `flowchart [TB|TD|BT|RL|LR]`
+- `TB` is top to bottom
+- `TD` is top down
+- `BT` is bottom to top
+- `RL` is right to left
+- `LR` is left to right
+- `NODE_NAME["Label/Description"]` defines a node. A node is defined once and used everywhere in the diagram.
+- `ParentNode-- "arrow label" -->ChildNode` defines a flow between two nodes. The arrow label is optional.
+- `ParentNode --> |"arrow label"| ChildNode` can also be used to define a flow between two nodes. This is useful when you want to add a description to the flow. The description will be rendered on the diagram.
+- 
+
+```mermaid
+flowchart TD
+    User["Premium Member
+    [Person]
+    A user of the website who has \n purchased a subscription"]
+    
+    LS["Listing Service
+    [Software System]
+    Serves web pages displaying title \n listing to the end user"]
+   
+    User -- "Views titles, searches titles \n and reviews titles using" --> LS
 ```
