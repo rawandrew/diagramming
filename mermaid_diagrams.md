@@ -12,6 +12,7 @@ flowchart LR
 ## How to create and document a domain  model
 
 Markup legend for a `classDiagram`:
+
 - `--` represents a bidirectional association between two entities. Those entities can exist individually without knowing one about the other. Peer entities that might work together and hold references from one to the other.
 - `-->` represents a directional association between two entities. Those entities can exist individually without knowing one about the other. But in this case just one entity can hold a reference to the other entity. The other one can never hold a reference to the other entity.
 - `0--` represents an aggregation association. Entities linked by aggregation can still exist independently. But one is a parent which is linked to a child. If the parent entity is deleted, the child can still remain and live on independently.
@@ -25,7 +26,7 @@ Markup legend for a `classDiagram`:
 The above markup can be used to generate something like...
 
 
-### Streamy Domain Model
+#### Streamy Domain Model
 
 ```mermaid
 classDiagram
@@ -50,7 +51,7 @@ classDiagram
 
 Let's try another one...
 
-### School Domain Model
+#### School Domain Model
 
 ```mermaid
 classDiagram
@@ -70,7 +71,8 @@ classDiagram
 
 Sequence diagrams are high-level views of a process, so try to keep the labels high-level too.
 
-Markup legend for `sequenceDiagram`
+Markup legend for `sequenceDiagram`:
+
 - `autonumber` can be used to add numbers for the messages on the flow.
 - `actor` defines an actor. An actor represents a human user.
 - `participant` defines a participant. A participant represents a process. You can define aliases for participants like so `participant SUS as Sign Up Service`. When defining messages between participants, you can then use the shorter alias rather than its full name, which will still be rendered on the diagram.
@@ -82,7 +84,7 @@ Markup legend for `sequenceDiagram`
 - `Note [Left|Right] of NODE_NAME` to add a note on the diagram for a specific node.
 - `links` can be used to add an active dropdown for each actor or participant.
 
-### User Signup Flow Diagram
+#### User Signup Flow Diagram
 
 ```mermaid
 sequenceDiagram
@@ -114,9 +116,10 @@ sequenceDiagram
     links User Service: {"Repository": "https://www.example.com/repository"}
 ```
 
-### How to Model Your Architecture
+## How to Model Your Architecture
 
 Markup legend for `flowchart [TB|TD|BT|RL|LR]`
+
 - `TB` is top to bottom
 - `TD` is top down
 - `BT` is bottom to top
@@ -164,9 +167,15 @@ flowchart TD
     class TS,RS,SS supportingSystem
 ```
 
-### How to Map You System's Containers
+## How to Map You System's Containers
 
 A container is a single deployable unit. A container diagram shows interactions between containers rather than systems. They sho everything deployed for that system to function.
+
+Markup legend for `flowchart [TB|TD|BT|RL|LR]` continued
+
+- `subgraph id[Title]` closed with `end` allows defining sub-flows within the main flowchart.
+- `style nodeId styleProperties` to style just a specific node.
+- A variety of shapes besides rectangles and cylinders are available to use within flowcharts. The main other two are circles, which are formed using `id((label))`, and diamonds, formed using `id{label}`. A full list is available from Mermaid’s documentation
 
 ```mermaid
 flowchart TD
@@ -182,12 +191,48 @@ flowchart TD
     [Xamarin Application]
     Allows members to view and review \n titles from their mobile devices"]
     
+    R[("In-Memory Cache
+    [Redis]
+    Titles and their reviews \n are cached")]
+    
+    K["Message Broker 
+    [Kafka]
+    Important domain events \n are published to Kafka"]
+
+    TS["Title Service 
+    [Software System]
+    Provides an API to retrieve \n title information"]
+
+    RS["Reviews Service
+    [Software System]
+    Provides an API to retrieve \n and submit reviews"]
+
+    SS["Search Service 
+    [Software System]
+    Provides an API to search \n for titles"]
+
+    
     User -- "Views titles, searches titles and reviews titles \n using [HTTPS]" --> WA
     User -- "Views titles, searches titles and reviews titles \n using [HTTPS]" --> MA
     
+    subgraph listing-service[Listing Service]
+        MA -- "Makes API calls to \n [HTTPS]" --> WA
+        WA -- "Reads and writes to \n [Redis Serialization Protocol]" --> R
+    end
+    
+    WA -- "Publishes messages to \n [Binary over TCP]" --> K
+    WA -- "Makes API calls to \n [HTTPS]" --> TS
+    WA -- "Makes API calls to \n [HTTPS]" --> RS
+    WA -- "Makes API calls to \n [HTTPS]" --> SS
+
+    
     classDef container fill:#1168bd,stroke:#0b4884, color:#ffffff
     classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+    classDef supportingSystem fill:#666,stroke:#0b4884,color:#ffffff
     
     class User person
-    class WA,MA container
+    class WA,MA,R container
+    class TS,RS,SS,K supportingSystem
+  
+    style listing-service fill:none,stroke:#CCC,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
 ```
