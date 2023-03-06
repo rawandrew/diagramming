@@ -71,6 +71,7 @@ classDiagram
 Sequence diagrams are high-level views of a process, so try to keep the labels high-level too.
 
 Markup legend for `sequenceDiagram`
+- `autonumber` can be used to add numbers for the messages on the flow.
 - `actor` defines an actor. An actor represents a human user.
 - `participant` defines a participant. A participant represents a process. You can define aliases for participants like so `participant SUS as Sign Up Service`. When defining messages between participants, you can then use the shorter alias rather than its full name, which will still be rendered on the diagram.
 - `->>` defines a synchronous interaction between two sequence diagram nodes which is a message. It is a request.
@@ -79,6 +80,7 @@ Markup legend for `sequenceDiagram`
 - `--)` defines an asynchronous interaction between participants/actors.
 - `activate PARTTICIPANT_NAME` with `deactivate PARTICIPANT_NAME` to define an activation that offers more insight at a glance on the diagram. Activations can also be defined by adding a `+` (activation) or `-` (deactiva- tion) sign to the ends of the arrows.
 - `Note [Left|Right] of NODE_NAME` to add a note on the diagram for a specific node.
+- `links` can be used to add an active dropdown for each actor or participant.
 
 ### User Signup Flow Diagram
 
@@ -108,4 +110,6 @@ sequenceDiagram
         User Service -->>- Sign Up Service: 201 Created (User)
         Sign Up Service -->>- Browser: 301 Redirect (Login Page)
     end
+    
+    links User Service: {"Repository": "https://www.example.com/repository"}
 ```
