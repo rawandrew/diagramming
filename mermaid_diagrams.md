@@ -78,7 +78,7 @@ Markup legend for `sequenceDiagram`
 - `-->>` defines a reply message interaction. It is a response.
 - `alt SOME_TAG_NAME` then `else TAG_NAME` and `end` to define branching logic in a diagram. You can use as many `else` as you need to define more branches.
 - `--)` defines an asynchronous interaction between participants/actors.
-- `activate PARTTICIPANT_NAME` with `deactivate PARTICIPANT_NAME` to define an activation that offers more insight at a glance on the diagram. Activations can also be defined by adding a `+` (activation) or `-` (deactiva- tion) sign to the ends of the arrows.
+- `activate PARTTICIPANT_NAME` with `deactivate PARTICIPANT_NAME` to define an activation that offers more insight at a glance on the diagram. Activations can also be defined by adding a `+` (activation) or `-` (deactivation) sign to the ends of the arrows.
 - `Note [Left|Right] of NODE_NAME` to add a note on the diagram for a specific node.
 - `links` can be used to add an active dropdown for each actor or participant.
 
