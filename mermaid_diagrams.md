@@ -77,6 +77,7 @@ Markup legend for `sequenceDiagram`
 - `-->>` defines a reply message interaction. It is a response.
 - `alt SOME_TAG_NAME` then `else TAG_NAME` and `end` to define branching logic in a diagram. You can use as many `else` as you need to define more branches.
 - `--)` defines an asynchronous interaction between participants/actors.
+- `activate PARTTICIPANT_NAME` with `deactivate PARTICIPANT_NAME` to define an activation that offers more insight at a glance on the diagram. Activations can also be defined by adding a `+` (activation) or `-` (deactiva- tion) sign to the ends of the arrows.
 
 ### User Signup Flow Diagram
 
@@ -88,17 +89,19 @@ sequenceDiagram
     participant Kafka
     
     Browser ->> Sign Up Service: GET /sign_up
+    activate Sign Up Service
     Sign Up Service -->> Browser: 200 OK (HTML page)
+    deactivate Sign Up Service
     
-    Browser ->> Sign Up Service: POST /sign_up
+    Browser ->>+ Sign Up Service: POST /sign_up
     Sign Up Service ->> Sign Up Service: Validate input
     
     alt invalid input
         Sign Up Service -->> Browser: Error
     else valid input
-        Sign Up Service ->> User Service: POST /users
+        Sign Up Service ->>+ User Service: POST /users
         User Service --) Kafka: User Created Event Published
-        User Service -->> Sign Up Service: 201 Created (User)
-        Sign Up Service -->> Browser: 301 Redirect (Login Page)
+        User Service -->>- Sign Up Service: 201 Created (User)
+        Sign Up Service -->>- Browser: 301 Redirect (Login Page)
     end
 ```
