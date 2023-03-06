@@ -110,7 +110,7 @@ sequenceDiagram
         User Service -->>- Sign Up Service: 201 Created (User)
         Sign Up Service -->>- Browser: 301 Redirect (Login Page)
     end
-
+    
     links User Service: {"Repository": "https://www.example.com/repository"}
 ```
 
@@ -125,8 +125,8 @@ Markup legend for `flowchart [TB|TD|BT|RL|LR]`
 - `NODE_NAME["Label/Description"]` defines a node. A node is defined once and used everywhere in the diagram.
 - `ParentNode-- "arrow label" -->ChildNode` defines a flow between two nodes. The arrow label is optional.
 - `ParentNode --> |"arrow label"| ChildNode` can also be used to define a flow between two nodes. This is useful when you want to add a description to the flow. The description will be rendered on the diagram.
-- use `classDef` to define a class. You can then use `class` to apply the class to a node. You can define as many classes as you need.
-- use `class` to apply a class to a node. You can define multiple classes on a single node by separating them with a comma.
+- use `classDef className styleProperties` to define a class. You can then use `class` to apply the class to a node. You can define as many classes as you need.
+- use `class nodeId(s) className` to apply a class to a node. You can define multiple classes on a single node by separating them with a comma.
 
 ```mermaid
 flowchart TD
@@ -158,6 +158,7 @@ flowchart TD
     classDef focusSystem fill:#1168bd,stroke:#0b4884,color:#ffffff
     classDef supportingSystem fill:#666,stroke:#0b4884,color:#ffffff
     classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+    
     class User person
     class LS focusSystem
     class TS,RS,SS supportingSystem
