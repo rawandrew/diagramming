@@ -136,6 +136,21 @@ flowchart TD
     LS["Listing Service
     [Software System]
     Serves web pages displaying title \n listing to the end user"]
+    
+    TS["Title Service
+    [Software System]
+    Provides an API to retrieve \n title information"]
+    
+    RS["Review Service
+    [Software System]
+    Provides an API to retrieve \n and submit reviews"]
+    
+    SS["Search Service
+    [Software System]
+    Provides an API to search \n for titles"]
    
     User -- "Views titles, searches titles \n and reviews titles using" --> LS
+    LS -- "Retrieves title information from" --> TS
+    LS -- "Retrieves from and submits reviews to" --> RS
+    LS -- "Searches for titles using" --> SS
 ```
