@@ -345,23 +345,38 @@ flowchart TD
 ## How to design database schemas
 
 Markup legend for `erDiagram`:
-- `ENTITY_NAME_1 CARDINALITY--CARDINALITY ENTITY_NAME_2: "LABELS GO HERE"` is the format foe defining relationships. The cardinality can be on of the following four:
+- `ENTITY_NAME_1 CARDINALITY--CARDINALITY ENTITY_NAME_2: "LABELS GO HERE"` is the format for defining identifying relationships. Identifying means one entity cannot exist without another. The cardinality can be on of the following four:
   - `||` is exactly one
   - `}|` is one to many 
   - `o{` is zero to many
+  - `o|` is zero to one
+- `ENTITY_NAME_1 CARDINALITY..CARDINALITY ENTITY_NAME_2: "LABELS GO HERE"` is the format for defining non-identifying relationships. Non-identifying means they can exist independent of one another. The same cardinalities apply.
+- `PK` primary key
+- `FK` foreign key
 
 ```mermaid
 erDiagram
     TITLE {
-    int title_id
-    int type_id
+    int title_id PK
+    int type_id FK
     string name
     datetime release_date
     }
     
     TITLE_TYPE {
-    int type_id
+    int type_id PK
     string type
+    }
+    
+    ACTOR {
+    int actor_id PK
+    string name
+    date date_of_birth
+    }
+    
+    TITLE_ACTOR {
+    int title_id PK "FK"
+    int actor_id PK "FK"
     }
     
     GENRE {
@@ -370,12 +385,48 @@ erDiagram
     }
     
     TITLE_GENRE {
-    int title_id
-    int genre_id
+    int title_id PK "FK"
+    int genre_id PK "FK"
     }
     
-    TITLE }|--|| TITLE_TYPE: has
-    TITLE ||--o{ TITLE_GENRE: "belongs to"
+    EPISODE {
+    int episode_id PK
+    int season_id FK
+    string name
+    int season_number
+    int episode_number
+    datetime release_date
+    } 
     
-    TITLE_GENRE }o--|| GENRE: references
+    SEASON {
+    int season_id PK
+    int title_id FK
+    int season_number
+    date release_year
+    }
+    
+    REVIEW {
+    int review_id PK
+    int title_id FK
+    int episode_id FK
+    int season_id FK
+    string reviewed_by
+    datetime review_date
+    string review_text
+    }
+    
+    TITLE }|..|| TITLE_TYPE: has
+    TITLE ||--o{ TITLE_GENRE: "belongs to"
+    TITLE ||--|{ TITLE_ACTOR: features
+    TITLE ||..|{ SEASON: contains
+    
+    TITLE_GENRE }o..|| GENRE: references
+    
+    TITLE_ACTOR }|--|| ACTOR: references
+    
+    EPISODE }|..|| SEASON: contains
+    
+    REVIEW }o--o| TITLE: "made against"
+    REVIEW }o--o| EPISODE: "made against"
+    REVIEW }o--o| SEASON: "made against"
 ```
