@@ -344,6 +344,38 @@ flowchart TD
 
 ## How to design database schemas
 
-```mermaid
+Markup legend for `erDiagram`:
+- `ENTITY_NAME_1 CARDINALITY--CARDINALITY ENTITY_NAME_2: "LABELS GO HERE"` is the format foe defining relationships. The cardinality can be on of the following four:
+  - `||` is exactly one
+  - `}|` is one to many 
+  - `o{` is zero to many
 
+```mermaid
+erDiagram
+    TITLE {
+    int title_id
+    int type_id
+    string name
+    datetime release_date
+    }
+    
+    TITLE_TYPE {
+    int type_id
+    string type
+    }
+    
+    GENRE {
+    int genre_id PK
+    string name
+    }
+    
+    TITLE_GENRE {
+    int title_id
+    int genre_id
+    }
+    
+    TITLE }|--|| TITLE_TYPE: has
+    TITLE ||--o{ TITLE_GENRE: "belongs to"
+    
+    TITLE_GENRE }o--|| GENRE: references
 ```
