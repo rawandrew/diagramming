@@ -341,3 +341,9 @@ flowchart TD
     class RComp,SComp,TComp,RCont,SCont,TCont component
     style listing-service fill:none,stroke:#CCC,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
 ```
+
+## How to design database schemas
+
+```mermaid
+
+```
