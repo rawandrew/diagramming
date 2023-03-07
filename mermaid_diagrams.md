@@ -248,3 +248,96 @@ flowchart TD
   
     style listing-service fill:none,stroke:#CCC,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
 ```
+
+## How to structure your components and code
+
+A component here is the equivalent of a high-level namespace or module, or some sort of library or package that's included in the container.
+
+```mermaid
+flowchart TD
+    classDef container fill:#1168bd,stroke:##0b4884,color:#ffffff
+    classDef externalSystem fill:#666,stroke:#0b4884,color:#ffffff
+    classDef component fill:#85bbf0,stroke:#5d82a8,color:##000000
+    
+    Browser["Browser
+    [Web Browser]
+    Used by a user to browse \n the website"]
+    
+    MA["Application
+    [Xamarin Application]
+    Allows members to view and review \n titles from their mobile devices"]
+    
+    R["In-Memory Cache
+    [Redis]
+    Titles and their reviews \n are cached"]
+    
+    K["Message Broker
+    [Kafka]
+    Important domain events \n are published to Kafka"]
+    
+    TS["Title Service
+    [Software System]
+    Provides an API to retrieve \n title information"]
+    
+    RS["Review Service
+    [Software System]
+    Provides and API to retrieve \n and submit reviews"]
+    
+    SS["Search Service
+    [Software System]
+    Provides an API to search \n for titles"]
+    
+    TCont["Title Controller
+    [ASP.NET MVC Controller]
+    Allows users to view details \n about titles"]
+    
+    SCont["Search Controller
+    [ASP.NET MVC Controller]
+    Allows users to search \n for titles"]
+    
+    RCont["Review Controller
+    [ASP.NET MVC Controller]
+    Allows users to read and \n write reviews"]
+    
+    TComp["Title Component
+    [ASP.NET Namespace]
+    Provides information on titles, \n retrieves information from the title service \n and caches titles"]
+    
+    SComp["Search Component
+    [ASP.NET Namespace]
+    Searches titles using the \n search service"]
+    
+    RComp["Review Component
+    [ASP.NET Namespace]
+    Provides review information, \n submits new reviews \n and published domain events"]
+    
+    Browser -- "Submits requests to \n [HTTPS]" --->TCont
+    MA -- "Submits requests to \n [HTTPS]" ---> TCont
+    
+    MA -- "Submits requests to \n [HTTPS]" ---> SCont
+    Browser -- "Submits requests to \n [HTTPS]" ---> SCont
+    
+    MA -- "Submits requests to \n [HTTPS]" --->RCont
+    Browser -- "Submits requests to \n [HTTPS]" --->RCont
+    
+    subgraph listing-service[Listing Service]
+        TCont ---> TComp
+        RCont ---> TComp
+        RCont ---> RComp
+        
+        SCont ---> SComp
+    end
+    
+    TComp ---> TS
+    TComp ---> R
+    RComp ---> R
+    RComp ---> K
+    RComp ---> RS
+    
+    SComp ---> SS
+    
+    class MA,R container
+    class SS,RS,TS,K,Browser externalSystem
+    class RComp,SComp,TComp,RCont,SCont,TCont component
+    style listing-service fill:none,stroke:#CCC,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
+```
