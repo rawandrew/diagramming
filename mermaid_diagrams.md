@@ -464,3 +464,67 @@ sequenceDiagram
     
     CreateUserService -->>- UserController: User
 ```
+
+```mermaid
+classDiagram
+    class UserController {
+        <<Class>>
+        -ICreateUserService _createUserService
+        +UserController (ICreateUserService createUserService)
+        +Create(string email, string username) User
+    }
+    
+    class CreateUserRequest {
+        <<Class>>
+        +string Email
+        +string Username
+        
+        +Validate() bool
+    }
+    
+    class ICreateUserService {
+        <<Interface>>
+        +call(CreateUserRequest createUserRequest) User
+    }
+    
+    class CreateUserService {
+        <<CLass>
+        -UserModel _userModel
+        -SendWelcomeEmailService _sendWelcomeEmailService
+        -Kafka _kafka
+        +CreateUserService(UserModel um, SendWelcomeEmailService es, Kafka k)
+        +Call(CreateUserRequest createUserRequest) User
+        -CheckActiveUsers(List~User~ users) bool
+    }
+    
+    class UserModel {
+        <<Class>>
+        +FindUsersByEmail(string email) Lists~User~
+        +CreateUser(string email, string username) User
+    }
+    
+    class User {
+        <<Class>>
+        +int UserId
+        +string Username
+        +string Email
+    }
+    
+    class SendWelcomeEmailService {
+        <<Class>>
+        +Call(User user) bool
+    }
+    
+    class Kafka {
+        <<Class>>
+        +PublishUserCreatedEvent(User User) bool
+    }
+    
+    UserController ..> CreateUserRequest: depends on
+    UserController ..> ICreateUserService: depends on
+    CreateUserService ..|> ICreateUserService: implements
+    CreateUserService ..> UserModel: depends on
+    UserModel ..> User: depends on
+    CreateUserService ..> SendWelcomeEmailService: depends on
+    CreateUserService ..> Kafka: depends on
+```
